@@ -8,7 +8,7 @@ const lyricsapiController = {};
 
 lyricsapiController.getLyrics = async (req, res, next) => {
   try {
-    const {songname, artist} = req.body
+    const { songname, artist, trackId } = req.body;
     const params = {
       q_track: songname,
       q_artist: artist,
@@ -27,6 +27,7 @@ lyricsapiController.getLyrics = async (req, res, next) => {
         res.locals.lyrics = lyricsBody;
         res.locals.artist = artist;
         res.locals.songname = songname;
+        res.locals.trackId = trackId;
         return next();
       } else {
         console.log('No lyrics found');
