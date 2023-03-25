@@ -1,10 +1,10 @@
 const { Configuration, OpenAIApi } = require('openai');
-const OPENAI_API_KEY = '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';
+const OPENAI_API_KEY = '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';
 
 const gptapiController = {};
 gptapiController.genLyrics = async (req, res, next) => {
   try {
-    const { lyrics, artist, songname } = res.locals;
+    const { lyrics, artist, songname, trackId } = res.locals;
     const configuration = new Configuration({
       apiKey: OPENAI_API_KEY,
     });
@@ -12,12 +12,12 @@ gptapiController.genLyrics = async (req, res, next) => {
 
     const completion = await openai.createChatCompletion({
       model: 'gpt-3.5-turbo',
-      temperature: 1.4,
+      temperature: 0.8,
       max_tokens: 1000,
       messages: [
         {
           role: 'user',
-          content: ` Completely Creatively rewrite these lyrics  for me : ${lyrics}. Make sure it is very diffrent from the song but still unique.`,
+          content: ` Completely Creatively rewrite these lyrics  for me : ${lyrics} but don't use the song title`,
         },
       ],
     });
@@ -27,6 +27,7 @@ gptapiController.genLyrics = async (req, res, next) => {
     res.locals.response = response;
     res.locals.artist = artist;
     res.locals.songname = songname;
+    res.locals.trackId = trackId;
     return next();
   } catch (error) {
     // Handle error

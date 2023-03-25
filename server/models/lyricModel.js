@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const MONGO_URI =
-  'mongodb+srv://yiningcw:ar6QywwxQs61uAe3@mernapp.r9sezjx.mongodb.net/test';
+  'mongodb+srv://Slava:lyricgeniusproject@mernapp.r9sezjx.mongodb.net/test';
 
 mongoose
   .connect(MONGO_URI, {
@@ -17,13 +17,12 @@ mongoose
 const Schema = mongoose.Schema;
 
 const songSchema = new Schema({
-    name: String,
-    artist: String,
-    lyrics: String,
-    trackId: String,
-})
+  name: String,
+  artist: String,
+  lyrics: String,
+  trackId: String,
+});
 
-const Song = mongoose.model('song', songSchema)
-
+const Song = mongoose.model('song', songSchema);
 
 module.exports = Song;
