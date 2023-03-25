@@ -5,8 +5,8 @@ import logo from './assets/music-logo.png'
 import './assets/music-logo.png'
 function Navbar() {
   return (
-    <div classname='buttons' style={{ display: 'flex', flexDirection: 'row', alignContent: 'center', justifyContent: 'space-between', height: '10vh', width: '100%', backgroundColor: 'rgb(71, 169, 215)', textDecoration: 'none' }}>
-        <div classname='leftbuttons' style={{ display: 'flex', justifyContent: 'space-between'}}>
+    <div className='buttons' style={{ display: 'flex', flexDirection: 'row', alignContent: 'center', justifyContent: 'space-between', height: '10vh', width: '100%', backgroundColor: 'rgb(71, 169, 215)', textDecoration: 'none' }}>
+        <div className='leftbuttons' style={{ display: 'flex', justifyContent: 'space-between'}}>
         <button>
           <Link to="/about">About Us</Link>
         </button>
@@ -17,7 +17,7 @@ function Navbar() {
         <div className='logo'>
             <img src={logo} alt='logo' style={{ height: '100%'}}/>
         </div>
-        <button classname='playbutton'>
+        <button className='playbutton'>
           <Link to="/play">Play Now!</Link>
         </button>
      
