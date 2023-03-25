@@ -26,4 +26,23 @@ databaseController.createEntry = async (req, res, next) => {
   }
 };
 
+databaseController.getSong = async (req, res, next) => {
+  // console.log('trackId', typeof trackId);
+
+  try {
+    const trackId = req.params.id;
+    // console.log('name', name);
+    const song = await Song.findOne({ trackId: trackId });
+    res.locals.foundSong = song;
+    return next();
+  } catch (err) {
+    console.error('Error in databaseController.getSong:', err);
+    return next({
+      log: 'Express error handler caught at databaseController.getSong middleware error',
+      status: 400,
+      message: { err: 'Cannot get song from db' },
+    });
+  }
+};
+
 module.exports = databaseController;

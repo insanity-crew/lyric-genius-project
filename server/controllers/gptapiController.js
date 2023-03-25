@@ -1,5 +1,5 @@
 const { Configuration, OpenAIApi } = require('openai');
-const OPENAI_API_KEY = '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';
+const OPENAI_API_KEY = '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';
 
 const gptapiController = {};
 gptapiController.genLyrics = async (req, res, next) => {
@@ -12,8 +12,8 @@ gptapiController.genLyrics = async (req, res, next) => {
 
     const completion = await openai.createChatCompletion({
       model: 'gpt-3.5-turbo',
-      temperature: 0.8,
-      max_tokens: 1000,
+      temperature: 1,
+      max_tokens: 800,
       messages: [
         {
           role: 'user',
