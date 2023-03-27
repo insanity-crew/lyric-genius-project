@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import axios from "axios";
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+
 
 function Game() {
   const [getLyrics, setGetLyrics] = useState("");
@@ -10,8 +13,12 @@ function Game() {
   const [idInput, setIdInput] = useState("");
   const [dataName, setDataName] = useState("");
   const [lyrics, setLyrics] = useState("");
+  const [equal, setEqual] = useState('');
  
-
+  useEffect(() => {
+    if (dataName === inputVal) setEqual('true')
+  })
+  
   async function addSong() {
     await axios.post("https://localhost:5001/api/lyricsapi", {
       name: songInput,
@@ -37,23 +44,24 @@ function Game() {
   }
   //create key for input song name
   function compareAnswer() {
-    if (dataName === inputVal) return (
-      alert('Correct')
-    );  //render something
-    else return (
-      alert('Incorrect!')
-    );
+    setEqual('false')
+    if (dataName === inputVal) setEqual('true');  //render something
   }
   return (
     <div>
       <Navbar />
       <div className="contentBox">
         <h1>Play</h1>
+        <div>
+          {(equal !== '') {
+            (equal === 'true') ? <h2>Correct!</h2> : <h2>Incorrect</h2>}
+          }
+        </div>
         <div className="gameContent">
-          <div className="lyrics">
+          <div className="lyrics" style={{width: '75%'}}>
             <button onClick={randomizeTrack}>Generate Lyrics</button>
             <div>
-              {lyrics.length > 0 ? <div style={{'overflow-y': 'scroll'}}><p>{lyrics}</p></div>: <p>Lyrics go here</p>}
+              {lyrics.length > 0 ? <div style={{'overflowY': 'scroll', height: '400px'}}><p>{lyrics}</p></div>: <p>Lyrics go here</p>}
             </div>
           </div>
           <form onSubmit={compareAnswer}>
@@ -65,7 +73,7 @@ function Game() {
                 setInputVal(e.target.value);
               }}
             />
-            <button type="submit">Guess</button>
+              <button type="submit">Guess</button>
           </form>{" "}
           <br />
           {/* <form>
