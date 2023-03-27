@@ -12,7 +12,7 @@ function Login() {
     async function checkLogin(event) {
       event.preventDefault()
       try {
-      const res = await axios.post("http://localhost:5001/users/login", {email: inputEmail, password: inputPassword, withCredentials: true})
+      const res = await axios.post("http://localhost:5001/users/login", {email: inputEmail, password: inputPassword}, {withCredentials: true})
       console.log(res)
       // .then(res => res.json())
       const loginStatus = Cookies.get('loggedIn')
@@ -32,13 +32,12 @@ function Login() {
         <Navbar/>
         <h1>Login</h1>
         <div className = 'loginPage'>
-          <button onClick={()=>{console.log(inputEmail, inputPassword)}}>TESTING</button>
         <form onSubmit={checkLogin} >
             <div className ="inputs">
             <input               
               type="text"
               name="username"
-              placeholder = 'Username'
+              placeholder = 'Email'
               email={inputEmail}
               onChange={(e) => {
                 setInputEmail(e.target.value);
