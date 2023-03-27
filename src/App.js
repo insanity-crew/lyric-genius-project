@@ -1,6 +1,6 @@
 import "./App.css";
 import React from "react";
-
+import Signup from './Signup'
 import Rules from "./Rules";
 import Game from "./Game";
 import About from "./About";
@@ -28,6 +28,9 @@ const routes = createBrowserRouter([
   {
     path: "/rules",
     element: <Rules/>
+  }, {
+    path: "/signup",
+    element: <Signup />
   }
 ]);
 

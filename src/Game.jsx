@@ -53,9 +53,9 @@ function Game() {
       <div className='contentBox'>
         <h1>Play</h1>
         <div>
-          {(equal !== '') {
+          {/* {(equal !== '') {
             (equal === 'true') ? <h2>Correct!</h2> : <h2>Incorrect</h2>}
-          }
+          } */}
         </div>
         <div className="gameContent">
           <div className="lyrics" style={{width: '75%'}}>
