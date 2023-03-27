@@ -1,12 +1,22 @@
 import React, {useState, useEffect} from 'react'
 import Navbar from "./Navbar"
 import "./assets/styles.scss"
+import axios from 'axios'
 function Login() {
     const [inputPassword, setInputPassword] = useState("");
     const [inputUsername, setInputUsername] = useState("");
-    function checkLogin() {
-        console.log("login")
+    const [loggedIn, setLoggedIn] = useState(false)
+    async function checkLogin() {
+      try {
+        await axios.post("https://localhost:5001/", {
+        username: inputUsername,
+        password: inputPassword
+      });
+      setLoggedIn(true) //do we need a conditional here? try testing
+    } catch (err) {
+      console.error("Error: ", err);
     }
+  }
 
   return (
     <div>
