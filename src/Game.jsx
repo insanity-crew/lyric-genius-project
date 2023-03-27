@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import axios from "axios";
 import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
 
 
 function Game() {
@@ -13,10 +12,14 @@ function Game() {
   const [idInput, setIdInput] = useState("");
   const [dataName, setDataName] = useState("");
   const [lyrics, setLyrics] = useState("");
-  const [equal, setEqual] = useState('');
- 
+  const [equal, setEqual] = useState(false);
+  const [winner, setWinner] = useState("");
   useEffect(() => {
-    if (dataName === inputVal) setEqual('true')
+    if (dataName === inputVal) {
+      setWinner(true)
+    } else {
+      setWinner(false)
+    }
   })
   
   async function addSong() {
@@ -43,19 +46,22 @@ function Game() {
     }
   }
   //create key for input song name
-  function compareAnswer() {
-    setEqual('false')
-    if (dataName === inputVal) setEqual('true');  //render something
+  function compareAnswer(event) {
+    event.preventDefault();
+    setEqual(false)
+    if (dataName === inputVal) {
+      alert('Correct!');
+      return randomizeTrack();
+    }
+    else alert('Incorrect!')//render something
   }
+  
   return (
     <div>
       <Navbar />
       <div className='contentBox'>
         <h1>Play</h1>
         <div>
-          {/* {(equal !== '') {
-            (equal === 'true') ? <h2>Correct!</h2> : <h2>Incorrect</h2>}
-          } */}
         </div>
         <div className="gameContent">
           <div className="lyrics" style={{width: '75%'}}>
@@ -76,35 +82,6 @@ function Game() {
               <button type="submit">Guess</button>
           </form>{" "}
           <br />
-          {/* <form>
-            <input
-              type="text"
-              name="addsong"
-              value={songInput}
-              onChange={(e) => {
-                setSongInput(e.target.value);
-              }}
-            />
-            <input
-              type="text"
-              name="addartist"
-              value={artistInput}
-              onChange={(e) => {
-                setArtistInput(e.target.value);
-              }}
-            />
-            <input
-              type="text"
-              name="addid"
-              value={idInput}
-              onChange={(e) => {
-                setIdInput(e.target.value);
-              }} */}
-            {/* /> */}
-            {/* <button onClick={addSong}>Add song</button> */}
-          {/* </form>
-          <button onClick={() => console.log(songInput)}>SONG</button>
-          <button onClick={()=>{console.log(songInput, artistInput, idInput)}}>CHECK INPUTS</button> */}
         </div>
       </div>
     </div>
@@ -112,3 +89,31 @@ function Game() {
 }
 
 export default Game;
+/*<div>
+      <Navbar />
+      <div className='contentBox'>
+        <h1>Play</h1>
+        <div>
+        </div>
+        <div className="gameContent">
+          <div className="lyrics" style={{width: '75%'}}>
+            <button onClick={randomizeTrack}>Generate Lyrics</button>
+            <div>
+              {lyrics.length > 0 ? <div style={{'overflowY': 'scroll', height: '400px'}}><p>{lyrics}</p></div>: <p>Lyrics go here</p>}
+            </div>
+          </div>
+          <form onSubmit={compareAnswer}>
+            <input
+              type="text"
+              name="guess"
+              value={inputVal}
+              onChange={(e) => {
+                setInputVal(e.target.value);
+              }}
+            />
+              <button type="submit">Guess</button>
+          </form>{" "}
+          <br />
+        </div>
+      </div>
+    </div> */
