@@ -11,7 +11,7 @@ function Navbar() {
           <Link to="/about">About Us</Link>
         </button>
         <button>
-          <Link to="/">Rules</Link>
+          <Link to="/rules">Rules</Link>
         </button>
         </div>
         <div className='logo'>

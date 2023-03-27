@@ -91,3 +91,22 @@ button:hover{
     display: flex;
     justify-content: space-between;
 }
+
+.loginPage {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    margin: 50px;
+}
+
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    input {
+        margin: 20px;
+        padding-left: 20px;
+    }
+}
