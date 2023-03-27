@@ -4,7 +4,7 @@ import React from "react";
 import Rules from "./Rules";
 import Game from "./Game";
 import About from "./About";
-
+import Login from "./Login";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -19,12 +19,16 @@ const routes = createBrowserRouter([
   },
   {
     path: "/",
-    element: <Rules />,
+    element: <Login />,
   },
   {
     path: "/play",
     element: <Game />,
   },
+  {
+    path: "/rules",
+    element: <Rules/>
+  }
 ]);
 
 function App() {
