@@ -43,7 +43,7 @@ function Login() {
                 setInputEmail(e.target.value);
               }} />
             <input               
-              type="text"
+              type="password"
               name="password"
               placeholder = 'Password'
               password={inputPassword}

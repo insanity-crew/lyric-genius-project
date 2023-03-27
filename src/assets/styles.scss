@@ -43,6 +43,7 @@ input {
     margin: auto;
     p {
         font-size: 25px;
+        line-height: 1.6;
     }
 }
 
@@ -58,12 +59,13 @@ button{
     background-color: darken($color2, 7%);
     text-decoration: none;
     border: 3px darken($color1, 50%);
-    border-radius: 4px;
+    border-radius: 27px;
     // padding: 20px;
     margin: 10px;
     font-size: 16px;
+    height: 50px;
+    width: 180px;
     font-family: 'Comfortaa', cursive;
-
 }
 
 button:hover{
@@ -109,4 +111,8 @@ button:hover{
         margin: 20px;
         padding-left: 20px;
     }
+}
+
+input{
+    border: none;
 }
