@@ -50,7 +50,7 @@ function Game() {
   return (
     <div>
       <Navbar />
-      <div className="contentBox">
+      <div className='contentBox'>
         <h1>Play</h1>
         <div>
           {(equal !== '') {

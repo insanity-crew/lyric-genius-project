@@ -1,12 +1,14 @@
 const path = require('path');
 const express = require('express');
-const apiRoutes = require('./routes/apiRoutes')
+const apiRoutes = require('./routes/apiRoutes');
+const userRoutes = require('./routes/userRoutes');
 const app = express();
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, './../build')));
 
-app.use('/api', apiRoutes)
+app.use('/api', apiRoutes);
+app.use('/users', userRoutes);
 //
 //
 //

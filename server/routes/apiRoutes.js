@@ -14,6 +14,7 @@ router.post(
     res.status(200).json({ lyrics: res.locals.newSong });
   }
 );
+
 router.get('/:id', databaseController.getSong, (req, res) => {
   res.status(200).json(res.locals.foundSong);
 });
