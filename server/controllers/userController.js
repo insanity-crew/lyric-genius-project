@@ -1,13 +1,13 @@
-const { User } = require('../models/userModel');
+const User = require('../models/userModel');
 
-const AuthController = {};
+const userController = {};
 
-AuthController.createUser = async (req, res, next) => {
+userController.createUser = async (req, res, next) => {
   const { name, email, password } = req.body;
   try {
     if (name && password && email) {
       await User.create({ name, email, password });
-      next();
+      return next();
     } else {
       throw new Error('Missing name, email, or password');
     }
@@ -20,7 +20,7 @@ AuthController.createUser = async (req, res, next) => {
   }
 };
 
-AuthController.verifyUser = async (req, res, next) => {
+userController.verifyUser = async (req, res, next) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
 
@@ -38,4 +38,4 @@ AuthController.verifyUser = async (req, res, next) => {
     return next();
   }
 };
-module.exports = AuthController;
+module.exports = userController;

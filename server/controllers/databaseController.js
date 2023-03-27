@@ -11,7 +11,7 @@ databaseController.createEntry = async (req, res, next) => {
   try {
     const newSong = await Song.create({
       name: songname,
-      artist,
+      artist: artist,
       lyrics: response,
       trackId,
     });
