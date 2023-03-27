@@ -27,7 +27,7 @@ function Game() {
       const response = await axios.get(`/api/${newTrackId}`, {
         trackId: newTrackId,
       })
-      console.log('tis is response data', response.data)
+      console.log('this is response data', response.data)
       //console.log(response.data.lyrics)
       setLyrics(response.data.lyrics)
       setDataName(response.data.name)
@@ -53,7 +53,7 @@ function Game() {
           <div className="lyrics">
             <button onClick={randomizeTrack}>Generate Lyrics</button>
             <div>
-              {lyrics.length > 0 ? <p>{lyrics}</p> : <p>Lyrics go here</p>}
+              {lyrics.length > 0 ? <div style={{'overflow-y': 'scroll'}}><p>{lyrics}</p></div>: <p>Lyrics go here</p>}
             </div>
           </div>
           <form onSubmit={compareAnswer}>
@@ -68,7 +68,7 @@ function Game() {
             <button type="submit">Guess</button>
           </form>{" "}
           <br />
-          <form>
+          {/* <form>
             <input
               type="text"
               name="addsong"
@@ -91,12 +91,12 @@ function Game() {
               value={idInput}
               onChange={(e) => {
                 setIdInput(e.target.value);
-              }}
-            />
-            <button onClick={addSong}>Add song</button>
-          </form>
+              }} */}
+            {/* /> */}
+            {/* <button onClick={addSong}>Add song</button> */}
+          {/* </form>
           <button onClick={() => console.log(songInput)}>SONG</button>
-          <button onClick={()=>{console.log(songInput, artistInput, idInput)}}>CHECK INPUTS</button>
+          <button onClick={()=>{console.log(songInput, artistInput, idInput)}}>CHECK INPUTS</button> */}
         </div>
       </div>
     </div>
