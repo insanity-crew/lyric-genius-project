@@ -1,37 +1,47 @@
-import React, {useState, useEffect} from 'react'
-import Navbar from "./Navbar"
-import "./assets/styles.scss"
-import axios from 'axios'
+import React, {useState, useEffect} from 'react';
+import {Link} from 'react-router-dom';
+import Navbar from "./Navbar";
+import "./assets/styles.scss";
+import axios from 'axios';
+import Cookies from 'js-cookie';
+
 function Login() {
     const [inputPassword, setInputPassword] = useState("");
-    const [inputUsername, setInputUsername] = useState("");
+    const [inputEmail, setInputEmail] = useState("");
     const [loggedIn, setLoggedIn] = useState(false)
-    async function checkLogin() {
+    async function checkLogin(event) {
+      event.preventDefault()
       try {
-        await axios.post("https://localhost:5001/", {
-        username: inputUsername,
-        password: inputPassword
-      });
-      setLoggedIn(true) //do we need a conditional here? try testing
+      const res = await axios.post("http://localhost:5001/users/login", {email: inputEmail, password: inputPassword, withCredentials: true})
+      console.log(res)
+      // .then(res => res.json())
+      const loginStatus = Cookies.get('loggedIn')
+      if (res.data.verified) {
+        setLoggedIn(true);
+        console.log("correct input")
+        window.location.href = "http://localhost:3000/play";
+      } else {
+        console.log("incorrect")
+      }
     } catch (err) {
       console.error("Error: ", err);
     }
   }
-
   return (
     <div>
         <Navbar/>
         <h1>Login</h1>
         <div className = 'loginPage'>
+          <button onClick={()=>{console.log(inputEmail, inputPassword)}}>TESTING</button>
         <form onSubmit={checkLogin} >
             <div className ="inputs">
             <input               
               type="text"
               name="username"
               placeholder = 'Username'
-              username={inputUsername}
+              email={inputEmail}
               onChange={(e) => {
-                setInputUsername(e.target.value);
+                setInputEmail(e.target.value);
               }} />
             <input               
               type="text"
@@ -43,6 +53,10 @@ function Login() {
               }} />
             </div>
             <button type='submit'>Login</button>
+        </form>
+        <form>
+          <h3>Don't have an account? Sign up now</h3>
+          <button><Link to = '/signup'>Sign Up</Link></button>
         </form>
         </div>
     </div>
