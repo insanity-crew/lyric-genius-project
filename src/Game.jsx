@@ -67,7 +67,12 @@ function Game() {
           <div className="lyrics" style={{width: '75%'}}>
             <button onClick={randomizeTrack}>Generate Lyrics</button>
             <div>
-              {lyrics.length > 0 ? <div style={{'overflowY': 'scroll', height: '400px'}}><p>{lyrics}</p></div>: <p>Lyrics go here</p>}
+              {lyrics.length > 0 ? <div style={{'overflowY': 'scroll', height: '400px', fontSize: '28px', color: 'black', width: "800px"}}>{lyrics.split('\n').map((line, index) => (
+                    <React.Fragment key={index}>
+                      <span>{line}</span>
+                      <br />
+                    </React.Fragment>
+                  ))}</div> : <p>Lyrics go here</p>}
             </div>
           </div>
           <form onSubmit={compareAnswer}>

@@ -8,29 +8,29 @@ import Cookies from "js-cookie"
 function Navbar() {
   const cookie = Cookies.get("loggedIn");
   return (
-    <div className='buttons' style={{ display: 'flex', flexDirection: 'row', alignContent: 'center', justifyContent: 'space-between', height: '10vh', width: '100%', backgroundColor: 'rgb(71, 169, 215)', textDecoration: 'none' }}>
+    <div className='buttons' style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', height: '10vh', width: '100%', backgroundColor: 'rgb(71, 169, 215)', textDecoration: 'none' }}>
         <div className='leftbuttons' style={{ display: 'flex', justifyContent: 'space-between'}}>
         <button>
-          <Link to="/about">About Us</Link>
+          <Link style={{ textDecoration: 'none' }} to="/about">About Us</Link>
         </button>
         <button>
-          <Link to="/rules">Rules</Link>
+          <Link style={{ textDecoration: 'none' }} to="/rules">Rules</Link>
         </button>
         <button>
-          <Link to='/'>Home</Link>
+          <Link style={{ textDecoration: 'none' }} to='/'>Home</Link>
          </button> 
         </div>
         <div className='logo'>
-            <img src={logo} alt='logo' style={{ height: '100%'}}/>
+            <img src={logo} alt='logo' style={{ height: '100%' }}/>
         </div>
         {cookie ? 
         <button className='playbutton'>
-          <Link to="/play">Play Now!</Link>
+          <Link style={{ textDecoration: 'none' }} to="/play">Play Now!</Link>
         </button>
         :
         <p></p>}
-     
     </div>
+  
   );
 }
 
