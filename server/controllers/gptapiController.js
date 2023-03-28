@@ -1,5 +1,5 @@
 const { Configuration, OpenAIApi } = require('openai');
-const OPENAI_API_KEY = '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';
+const OPENAI_API_KEY = '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';
 
 const gptapiController = {};
 gptapiController.genLyrics = async (req, res, next) => {

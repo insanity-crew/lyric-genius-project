@@ -3,9 +3,17 @@ const express = require('express');
 const apiRoutes = require('./routes/apiRoutes');
 const userRoutes = require('./routes/userRoutes');
 const app = express();
+const cors = require('cors');
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, './../build')));
+
+app.use(
+  cors({
+    credentials: true,
+    origin: 'http://localhost:3000',
+  })
+);
 
 app.use('/api', apiRoutes);
 app.use('/users', userRoutes);
