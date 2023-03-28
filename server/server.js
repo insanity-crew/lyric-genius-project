@@ -10,12 +10,12 @@ const http = require('http');
 app.use(express.json());
 app.use(express.static(path.join(__dirname, './../build')));
 
-// app.use(
-//   cors({
-//     credentials: true,
-//     origin: 'http://localhost:3000',
-//   })
-// );
+app.use(
+  cors({
+    credentials: true,
+    origin: 'http://localhost:3000',
+  })
+);
 
 app.use('/api', apiRoutes);
 app.use('/users', userRoutes);
@@ -38,6 +38,10 @@ io_server.on('connection', (socket_connection) => {
   // });
   socket_connection.on('disconnect', () => {
     console.log('user disconnected');
+  });
+
+  socket_connection.on('user_has_won', (res) => {
+    console.log('this user has won', res.user_cookies);
   });
 });
 

@@ -3,6 +3,7 @@ import Navbar from './Navbar';
 import axios from 'axios';
 import Popup from 'reactjs-popup';
 import { io } from 'socket.io-client';
+import Cookies from 'js-cookie';
 
 const socket = io('http://localhost:5001');
 
@@ -60,7 +61,17 @@ function Game() {
     event.preventDefault();
     setEqual(false);
     if (dataName === inputVal) {
-      alert('Correct!');
+      console.log(
+        '' +
+          dataName +
+          '=== ' +
+          inputVal +
+          '   > ' +
+          (dataName === inputVal ? true : false)
+      );
+      const winnerCookie = Cookies.get('ssid');
+      socket.emit('user_has_won', { user_cookies: winnerCookie });
+      // alert('Correct!');
       return randomizeTrack();
     } else alert('Incorrect!'); //render something
   }
