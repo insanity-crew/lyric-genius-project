@@ -42,6 +42,10 @@ io_server.on('connection', (socket_connection) => {
 
   socket_connection.on('user_has_won', (res) => {
     console.log('this user has won', res.user_cookies);
+    io_server.emit(
+      'emmiting_to_users',
+      `${res.user_cookies} has won this round`
+    );
   });
 });
 

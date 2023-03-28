@@ -23,6 +23,10 @@ function Game() {
       console.log('Connected to server', socket.id, 'in the frontend');
     });
 
+    socket.on('emmiting_to_users', (res) => {
+      console.log('message received from ', res);
+    });
+
     // if (dataName === inputVal) {
     //   setWinner(true);
     // } else {
