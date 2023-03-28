@@ -18,7 +18,7 @@ router.post(
   cookiesController.setSSIDCookie,
   (req, res) => {
     res.status(200).json({
-      id: res.locals.id,
+      id: res.locals.id, verified: res.locals.verified
     });
   }
 );
