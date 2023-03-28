@@ -27,10 +27,10 @@ function Game() {
     // } else {
     //   setWinner(false);
     // }
-    // return () => {
-    //   socket.disconnect();
-    // };
-  });
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   async function addSong() {
     await axios.post('https://localhost:5001/api/lyricsapi', {

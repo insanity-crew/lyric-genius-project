@@ -30,15 +30,15 @@ const io_server = socketIO(server, {
   },
 });
 
-io_server.on('connect', (socket_connection) => {
+io_server.on('connection', (socket_connection) => {
   console.log('user connected', socket_connection.id);
 
   // socket_connection.on('connect', (res) => {
   //   console.log('a user has connected', res.id);
   // });
-  // socket_connection.on('disconnect', () => {
-  //       console.log('user disconnected');
-  //     });
+  socket_connection.on('disconnect', () => {
+    console.log('user disconnected');
+  });
 });
 
 // io_server.on('connection', (socket_connection) => {
@@ -88,6 +88,6 @@ app.use((err, req, res, next) => {
   //  || 500;
   //   return res.status(errorStatus).send(res.locals.message);
 });
-app.listen(5001, () => {
+server.listen(5001, () => {
   console.log('Server is running on port 5001');
 });
