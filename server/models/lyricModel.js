@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const MONGO_URI =
-  'mongodb+srv://Anna:lyricgeniusproject@mernapp.r9sezjx.mongodb.net/test';
+  'mongodb+srv://lyricgenius:mm5vpspok3ibmCaw@lyricgeniusproject.jlm7hpg.mongodb.net/?retryWrites=true&w=majority';
 
 mongoose
   .connect(MONGO_URI, {

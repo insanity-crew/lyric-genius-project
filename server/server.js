@@ -4,6 +4,8 @@ const apiRoutes = require('./routes/apiRoutes');
 const userRoutes = require('./routes/userRoutes');
 const app = express();
 const cors = require('cors');
+const io = require('socket.io');
+const http = require('http');
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, './../build')));
@@ -17,7 +19,19 @@ app.use(
 
 app.use('/api', apiRoutes);
 app.use('/users', userRoutes);
-//
+
+const server = http.createServer(app);
+
+// const io_server = socketIO(server, {
+
+// })
+io.on('connection', (socket) => {
+  console.log('a user connected');
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+});
 //
 //
 //
