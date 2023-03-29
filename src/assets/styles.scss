@@ -116,3 +116,19 @@ button:hover{
 input{
     border: none;
 }
+
+// Display player
+.display-player {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+  }
+  
+  .player-name {
+    font-weight: bold;
+  }
+  
+  .player-score {
+    font-weight: normal;
+  }

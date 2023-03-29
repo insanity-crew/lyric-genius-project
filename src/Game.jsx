@@ -4,6 +4,7 @@ import axios from 'axios';
 import Popup from 'reactjs-popup';
 import { io } from 'socket.io-client';
 import Cookies from 'js-cookie';
+import Leaderboard from './Leaderboard';
 
 const socket = io('http://localhost:5001');
 
@@ -17,7 +18,7 @@ function Game() {
   const [lyrics, setLyrics] = useState('');
   const [equal, setEqual] = useState(false);
   const [winner, setWinner] = useState('');
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState({});
 
   const userCookie = Cookies.get('ssid');
   useEffect(() => {
@@ -32,11 +33,13 @@ function Game() {
       // }).json();
       // // const username = await getUserName(winnerCookie);
       // setUsers([...users, username]);
-      socket.emit('i_have_joined', { user_cookies: userCookie });
+      if (userCookie)
+        socket.emit('i_have_joined', { user_cookies: userCookie });
       socket.on('emmiting_to_users', (name) => {
         console.log('user connected ', name);
         console.log(users);
-        setUsers([...name]);
+        setUsers(name);
+        console.log('users,', users);
       });
     });
 
@@ -118,11 +121,12 @@ function Game() {
         <h1>Play</h1>
         <div></div>
         <div>
-          <ul>
-            {users.map((user) => (
-              <li>{user}</li>
+          <Leaderboard users={users} />
+          {/* <ul>
+            {Object.keys(users).map((user) => (
+              <li>{user}{users[user]}</li>
             ))}
-          </ul>
+          </ul> */}
         </div>
         <div className="gameContent">
           <div className="lyrics" style={{ width: '75%' }}>
