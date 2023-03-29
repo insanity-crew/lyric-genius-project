@@ -4,7 +4,7 @@ const gptapiController = require('../controllers/gptapiController');
 const lyricsapiController = require('../controllers/lyricsapiController');
 const databaseController = require('../controllers/databaseController');
 
-router.post(
+router.get(
   '/lyricsapi',
   // res.locals res.locals.lyrics = lyricsBody;
   // res.locals.artist = artist;

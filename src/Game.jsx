@@ -52,6 +52,7 @@ function Game() {
     socket.on('get_lyrics_from_server', (lyrics_object) => {
       // lyrics are this object
       console.log('im here');
+      // ANDRI and JAY: chenge this to state will update frontend for everyone (lyrics_objects is a string)
       console.log(lyrics_object, 'in frontend');
     });
   }, []);
