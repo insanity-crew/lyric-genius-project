@@ -4,6 +4,7 @@ import axios from 'axios';
 import Popup from 'reactjs-popup';
 import { io } from 'socket.io-client';
 import Cookies from 'js-cookie';
+import Leaderboard from './Leaderboard';
 
 const socket = io('http://localhost:5001');
 
@@ -17,7 +18,7 @@ function Game() {
   const [lyrics, setLyrics] = useState('');
   const [equal, setEqual] = useState(false);
   const [winner, setWinner] = useState('');
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState({});
 
   const userCookie = Cookies.get('ssid');
   useEffect(() => {
@@ -32,22 +33,16 @@ function Game() {
       // }).json();
       // // const username = await getUserName(winnerCookie);
       // setUsers([...users, username]);
+      if(userCookie)
       socket.emit('i_have_joined', { user_cookies: userCookie });
       socket.on('emmiting_to_users', (name) => {
         console.log('user connected ', name);
         console.log(users);
-        setUsers([...name]);
+        setUsers(name);
+        console.log('users,', users);
       });
     });
 
-    // if (dataName === inputVal) {
-    //   setWinner(true);
-    // } else {
-    //   setWinner(false);
-    // }
-    // return () => {
-    //   socket.disconnect();
-    // };
   }, []);
 
   async function addSong() {
@@ -96,18 +91,19 @@ function Game() {
   return (
     <div>
       <Navbar />
-      <div className="contentBox">
+      <div className='contentBox'>
         <h1>Play</h1>
         <div></div>
         <div>
-          <ul>
-            {users.map((user) => (
-              <li>{user}</li>
+          <Leaderboard users = {users}/>
+          {/* <ul>
+            {Object.keys(users).map((user) => (
+              <li>{user}{users[user]}</li>
             ))}
-          </ul>
+          </ul> */}
         </div>
-        <div className="gameContent">
-          <div className="lyrics" style={{ width: '75%' }}>
+        <div className='gameContent'>
+          <div className='lyrics' style={{ width: '75%' }}>
             <button onClick={randomizeTrack}>Generate Lyrics</button>
             <div>
               {lyrics.length > 0 ? (
@@ -134,14 +130,14 @@ function Game() {
           </div>
           <form onSubmit={compareAnswer}>
             <input
-              type="text"
-              name="guess"
+              type='text'
+              name='guess'
               value={inputVal}
               onChange={(e) => {
                 setInputVal(e.target.value);
               }}
             />
-            <button type="submit">Guess</button>
+            <button type='submit'>Guess</button>
           </form>{' '}
           <br />
         </div>
