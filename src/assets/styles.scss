@@ -1,50 +1,51 @@
-$color1: #8ECAE6;
+$color1: #8ecae6;
 $color2: rgb(71, 169, 215);
 $color3: #023047;
 $color4: #ffb703;
 $color5: #fb8500;
 
 body {
-    background-color: $color1;
-    font-family: 'Comfortaa', cursive;
+  background-color: $color1;
+  font-family: 'Comfortaa', cursive;
 }
 .contentBox {
-    text-align: center;
-    color: white;
-    text-shadow: 1px 1px 1px black;
-    margin: auto;
-    width: 1000px;
-    h1 {
-        font-size: 60px;
-    }
-    h3 {
-        font-size: 30px;
-    }
+//   display: flex;
+    
+  text-align: center;
+  color: white;
+  text-shadow: 1px 1px 1px black;
+  margin: auto;
+  width: 1000px;
+  h1 {
+    font-size: 60px;
+  }
+  h3 {
+    font-size: 30px;
+  }
 }
 input {
-    width: 500px;
-    height: 50px;
-    border-radius: 30px;
-    margin: auto;
+  width: 500px;
+  height: 50px;
+  border-radius: 30px;
+  margin: auto;
 }
 .gameContent {
-    color: white;
-    border: $color5 solid 8px;
-    margin: auto;
-    justify-content: center;
-    text-align: center;
-    border-radius: 20px;
-    padding: 20px;
-    
+  color: white;
+  border: $color5 solid 8px;
+  margin: auto;
+  justify-content: center;
+  text-align: center;
+  border-radius: 20px;
+  padding: 20px;
 }
 .lyrics {
-    height: 500px;
-    width: 500px;
-    margin: auto;
-    p {
-        font-size: 25px;
-        line-height: 1.6;
-    }
+  height: 500px;
+  width: 500px;
+  margin: auto;
+  p {
+    font-size: 25px;
+    line-height: 1.6;
+  }
 }
 
 // .buttons{
@@ -55,64 +56,81 @@ input {
 //     background-color: #8ECAE6;
 // }
 
-button{
-    background-color: darken($color2, 7%);
-    text-decoration: none;
-    border: 3px darken($color1, 50%);
-    border-radius: 27px;
-    // padding: 20px;
-    margin: 10px;
-    font-size: 16px;
-    height: 50px;
-    width: 180px;
-    font-family: 'Comfortaa', cursive;
+button {
+  background-color: darken($color2, 7%);
+  text-decoration: none;
+  border: 3px darken($color1, 50%);
+  border-radius: 27px;
+  // padding: 20px;
+  margin: 10px;
+  font-size: 16px;
+  height: 50px;
+  width: 180px;
+  font-family: 'Comfortaa', cursive;
 }
 
-button:hover{
-    cursor: pointer;
-    background-color: rgb(235, 37, 91);
+button:hover {
+  cursor: pointer;
+  background-color: rgb(235, 37, 91);
 }
 
-.buttons:visited{
-    text-decoration: none;
+.buttons:visited {
+  text-decoration: none;
 }
 
 .circle {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    background-color: lightgray;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-  }
-  
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: lightgray;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
 .imagecontainer {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .loginPage {
-    display: flex;
-    flex-direction: column;
-    padding: 30px;
-    margin: 50px;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  margin: 50px;
 }
-
 
 .inputs {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-    input {
-        margin: 20px;
-        padding-left: 20px;
-    }
+  input {
+    margin: 20px;
+    padding-left: 20px;
+  }
 }
 
-input{
-    border: none;
+input {
+  border: none;
 }
+
+// Display player
+.display-player {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+.player-name {
+  font-weight: bold;
+}
+
+.player-score {
+  font-weight: normal;
+}
+// .leaderboard {
+// }

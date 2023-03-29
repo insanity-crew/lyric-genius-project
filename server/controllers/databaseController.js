@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 const Song = require('../models/lyricModel');
+const User = require('../models/userModel');
 
 const databaseController = {};
+
 databaseController.createEntry = async (req, res, next) => {
   // get lyrics from res.locals object from chatgpt
   const { response, artist, songname, trackId } = res.locals;
@@ -42,6 +44,28 @@ databaseController.getSong = async (req, res, next) => {
       status: 400,
       message: { err: 'Cannot get song from db' },
     });
+  }
+};
+
+// find user using ssid
+databaseController.getUserName = async (ssid) => {
+  try {
+    console.log('in getusername');
+    const user = await User.findOne({ _id: ssid });
+    return user.name;
+  } catch (err) {
+    console.log('error in getUserName');
+  }
+};
+
+databaseController.getUser = async (req, res, next) => {
+  try {
+    console.log('in getusername');
+    const user = await User.findOne({ _id: req.body.cookie });
+    res.locals.id = user;
+    return next();
+  } catch (err) {
+    console.log('error in getUserName');
   }
 };
 
