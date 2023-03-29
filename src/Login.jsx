@@ -13,8 +13,6 @@ function Login() {
       event.preventDefault()
       try {
       const res = await axios.post("http://localhost:5001/users/login", {email: inputEmail, password: inputPassword}, {withCredentials: true})
-      console.log(res)
-      // .then(res => res.json())
       const loginStatus = Cookies.get('loggedIn')
       if (res.data.verified) {
         setLoggedIn(true);
