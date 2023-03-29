@@ -14,7 +14,9 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, './../build')));
 
 const users = {};
+const songname = 'dont stop believin'
 const socketToCookie = {};
+let winnerFound = false;
 
 app.use(
   cors({
@@ -75,21 +77,31 @@ io_server.on('connection', (socket_connection) => {
   socket_connection.on('ready_to_play', async () => {
     // call function to get tracks
     const response = await lyricsFunction.getLyrics();
+    winnerFound = false;
     // console.log(response, 'ready_to_play receiving request');
     // emit lyrics array
     console.log('about to emit to frontend');
     io_server.emit('get_lyrics_from_server', response);
   });
 
-  socket_connection.on('ready_to_play', async () => {
-    // call function to get tracks
-    const response = await lyricsFunction.getLyrics();
-    // console.log(response, 'ready_to_play receiving request');
-    // emit lyrics array
-    console.log('about to emit to frontend');
-    io_server.emit('get_lyrics_from_server', response);
-  });
+
+
+
+  socket_connection.on('check_answer', async (res) => {
+  
+    if(winnerFound !== true && res.guess === songname){
+      const username = await databaseFunction.getUserName(res.user_cookies);
+      users[username]++;
+      io_server.emit('emmiting_to_users', users);
+      winnerFound = true;
+
+    }
+  
+  })
+
+
 });
+
 
 app.use((err, req, res, next) => {
   const defaultErr = {

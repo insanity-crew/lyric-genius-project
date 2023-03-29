@@ -11,7 +11,6 @@ function Leaderboard({ users }) {
     return (
       <div>
           <div>{userCreate}</div>
-  
       </div>
     );
 }
