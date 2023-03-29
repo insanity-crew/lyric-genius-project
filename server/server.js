@@ -15,6 +15,7 @@ app.use(express.static(path.join(__dirname, './../build')));
 
 const users = {};
 const socketToCookie = {};
+let songName = '';
 
 app.use(
   cors({
@@ -74,21 +75,29 @@ io_server.on('connection', (socket_connection) => {
 
   socket_connection.on('ready_to_play', async () => {
     // call function to get tracks
-    const response = await lyricsFunction.getLyrics();
+    const response = await lyricsFunction.getTopSongs();
+    // songName = response.song;
     // console.log(response, 'ready_to_play receiving request');
     // emit lyrics array
-    console.log('about to emit to frontend');
-    io_server.emit('get_lyrics_from_server', response);
+    // console.log('about to emit to frontend');
+    // console.log('response:', response);
+    io_server.emit('get_lyrics_from_server', response.lyrics);
   });
 
-  socket_connection.on('ready_to_play', async () => {
-    // call function to get tracks
-    const response = await lyricsFunction.getLyrics();
-    // console.log(response, 'ready_to_play receiving request');
-    // emit lyrics array
-    console.log('about to emit to frontend');
-    io_server.emit('get_lyrics_from_server', response);
-  });
+  //   socket_connection.on('ready_to_play', async () => {
+  //     // call function to get tracks
+  //     // response = {lyrics: someLyrics, song_name: 'song name'}
+  //     const response = await lyricsFunction.getLyrics();
+  //     console.log(response, 'ready_to_play receiving request');
+
+  //     // server will check songName variable for right answer
+  //     // songName = response.song_name;
+
+  //     // emit lyrics array
+  //     // console.log('about to emit to frontend');
+
+  //     io_server.emit('get_lyrics_from_server', response.lyrics);
+  //   });
 });
 
 app.use((err, req, res, next) => {
