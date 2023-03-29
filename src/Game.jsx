@@ -102,13 +102,13 @@ function Game() {
     // setEqual(false);
 
     socket.emit('check_answer', { user_cookies: userCookie, guess: inputVal });
-    return randomizeTrack();
+    // return randomizeTrack();
   }
 
   return (
     <div>
       <Navbar />
-      <div className='contentBox'>
+      <div className="contentBox">
         <h1>Play</h1>
         <div className='gameWrapper'>
           <div className='leaderboard'>
