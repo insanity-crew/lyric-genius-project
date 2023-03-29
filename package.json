@@ -4,11 +4,14 @@
   "private": true,
   "proxy": "http://localhost:5001/",
   "dependencies": {
+    "@socket.io/admin-ui": "^0.5.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "concurrently": "^7.6.0",
+    "cors": "^2.8.5",
     "express": "^4.18.2",
+    "js-cookie": "^3.0.1",
     "mongoose": "^7.0.3",
     "nodemon": "^2.0.22",
     "openai": "^3.2.1",
@@ -16,8 +19,11 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.9.0",
     "react-scripts": "5.0.1",
+    "reactjs-popup": "^2.0.5",
     "sass": "^1.60.0",
     "sass-loader": "^13.2.1",
+    "socket.io": "^4.6.1",
+    "socket.io-client": "^4.6.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

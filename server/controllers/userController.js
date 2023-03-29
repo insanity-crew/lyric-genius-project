@@ -3,7 +3,7 @@ const User = require('../models/userModel');
 const userController = {};
 
 userController.createUser = async (req, res, next) => {
-  console.log('in createuser controller')
+  console.log('in createuser controller');
   const { name, email, password } = req.body;
   try {
     if (name && password && email) {
@@ -40,4 +40,5 @@ userController.verifyUser = async (req, res, next) => {
     return next();
   }
 };
+
 module.exports = userController;
