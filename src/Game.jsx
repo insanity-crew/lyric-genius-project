@@ -19,6 +19,7 @@ function Game() {
   const [equal, setEqual] = useState(false);
   const [winner, setWinner] = useState('');
   const [users, setUsers] = useState({});
+  const [guesses, setGuesses] = useState([]);
 
   const userCookie = Cookies.get('ssid');
   useEffect(() => {
@@ -99,6 +100,7 @@ function Game() {
   function compareAnswer(event) {
     event.preventDefault();
     // setEqual(false);
+
     socket.emit('check_answer', { user_cookies: userCookie, guess: inputVal });
     return randomizeTrack();
   }
@@ -151,7 +153,11 @@ function Game() {
             </form>{' '}
             <br />
           </div>
-          <div className='inputboard'></div>
+          <div className='inputboard'>
+            {guesses.map((guess) => (
+              <div>{guess}</div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
