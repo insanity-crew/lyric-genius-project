@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, './../build')));
 
 const users = {};
-const songname = 'dont stop believin';
+let songname;
 const socketToCookie = {};
 let winnerFound = false;
 
@@ -78,7 +78,10 @@ io_server.on('connection', (socket_connection) => {
     // call function to get tracks
     const response = await lyricsFunction.getTopSongs();
     // songName = response.song;
+    console.log(response);
     winnerFound = false;
+    songname = response.song_name.toLowerCase();
+    console.log(songname, 'songname in server.js');
     // console.log(response, 'ready_to_play receiving request');
     // emit lyrics array
     // console.log('about to emit to frontend');
@@ -87,8 +90,13 @@ io_server.on('connection', (socket_connection) => {
   });
 
   socket_connection.on('check_answer', async (res) => {
+    console.log('inside check answer');
+    console.log(res.guess);
+    console.log(winnerFound);
+    console.log(songname, ' this is the song name');
     if (winnerFound !== true && res.guess === songname) {
       const username = await databaseFunction.getUserName(res.user_cookies);
+      console.log(username);
       users[username]++;
       io_server.emit('emmiting_to_users', users);
       winnerFound = true;

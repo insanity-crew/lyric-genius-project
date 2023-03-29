@@ -23,10 +23,11 @@ lyricsapiController.getTopSongs = async () => {
       'https://api.musixmatch.com/ws/1.1/chart.tracks.get?apikey=4a28964225d2c59da62da66afe9d9552&chart_name=top&page=1&page_size=10&f_has_lyrics=1&country=US';
     let response = await axios.get(resultUrl);
     if (response.status === 200) {
+      const ran_num = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
       const artist_name =
-        response.data.message.body.track_list[0].track.artist_name;
+        response.data.message.body.track_list[ran_num].track.artist_name;
       const song_name =
-        response.data.message.body.track_list[0].track.track_name;
+        response.data.message.body.track_list[ran_num].track.track_name;
       // console.log(artist_name, ' ', song_name);
 
       const result_from_method = await lyricsapiController.getLyrics(
