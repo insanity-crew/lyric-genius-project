@@ -100,19 +100,19 @@ function Game() {
     event.preventDefault();
     // setEqual(false);
     socket.emit('check_answer', { user_cookies: userCookie, guess: inputVal });
-    return randomizeTrack();
+    // return randomizeTrack();
   }
 
   return (
     <div>
       <Navbar />
-      <div className='contentBox'>
+      <div className="contentBox">
         <h1>Play</h1>
         <div className='leaderboard'>
           <Leaderboard users={users} />
         </div>
-        <div className='gameContent'>
-          <div className='lyrics' style={{ width: '75%' }}>
+        <div className="gameContent">
+          <div className="lyrics" style={{ width: '75%' }}>
             <button onClick={getSongLyrics}>Generate Lyrics</button>
             <div>
               {lyrics.length > 0 ? (
@@ -139,14 +139,14 @@ function Game() {
           </div>
           <form onSubmit={compareAnswer}>
             <input
-              type='text'
-              name='guess'
+              type="text"
+              name="guess"
               value={inputVal}
               onChange={(e) => {
                 setInputVal(e.target.value);
               }}
             />
-            <button type='submit'>Guess</button>
+            <button type="submit">Guess</button>
           </form>{' '}
           <br />
         </div>

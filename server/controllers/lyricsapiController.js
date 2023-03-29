@@ -19,39 +19,51 @@ lyricsapiController.getTopSongs = async () => {
       country: 'us',
     };
     console.log('in lyricscontroller.getTopSongs');
-    const response = await axios.get(baseUrl + topSongsEndPoint, { params });
+    const resultUrl =
+      'https://api.musixmatch.com/ws/1.1/chart.tracks.get?apikey=4a28964225d2c59da62da66afe9d9552&chart_name=top&page=1&page_size=10&f_has_lyrics=1&country=US';
+    let response = await axios.get(resultUrl);
     if (response.status === 200) {
-      console.log(response.data.message);
-      const lyrics = response.data.message.body.lyrics;
-      if (lyrics) {
-        const lyricsBody = lyrics.lyrics_body;
-        console.log(lyricsBody);
-        return lyricsBody;
-      }
+      const ran_num = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
+      const artist_name =
+        response.data.message.body.track_list[ran_num].track.artist_name;
+      const song_name =
+        response.data.message.body.track_list[ran_num].track.track_name;
+      // console.log(artist_name, ' ', song_name);
+
+      const result_from_method = await lyricsapiController.getLyrics(
+        artist_name,
+        song_name
+      );
+      console.log(result_from_method, 'result_from_method');
+      return result_from_method;
     }
   } catch (error) {
     console.error('An error occurred in getTopSongs:', error.message);
   }
 };
 
-// lyricsapiController.getTopSongs();
+lyricsapiController.getTopSongs();
 
-lyricsapiController.getLyrics = async () => {
+lyricsapiController.getLyrics = async (artist_name, song_name) => {
   try {
     // const { songname, artist, trackId } = req.body;
     const params = {
-      q_track: "don't stop believin",
-      q_artist: 'journey',
+      q_track: song_name,
+      q_artist: artist_name,
       apikey: apiKey,
     };
-    console.log('in lyrics controller');
+    console.log('in lyrics controller getLyrics function');
     const response = await axios.get(baseUrl + endpoint, { params });
 
     if (response.status === 200) {
-      const lyrics = response.data.message.body.lyrics;
-
+      const lyrics = response.data.message;
+      // console.log(lyrics, 'lyrics');
       if (lyrics) {
-        const lyricsBody = lyrics.lyrics_body;
+        const lyricsBody = {
+          lyrics: lyrics.body.lyrics.lyrics_body,
+          song_name: song_name,
+        };
+
         //console.log(lyricsBody)
         // console.log('Lyrics:\n', lyricsBody);
         // console.log(lyricsBody);
