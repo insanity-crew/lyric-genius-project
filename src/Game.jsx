@@ -19,6 +19,7 @@ function Game() {
   const [equal, setEqual] = useState(false);
   const [winner, setWinner] = useState('');
   const [users, setUsers] = useState({});
+  const [guesses, setGuesses] = useState([]);
 
   const userCookie = Cookies.get('ssid');
   useEffect(() => {
@@ -99,6 +100,7 @@ function Game() {
   function compareAnswer(event) {
     event.preventDefault();
     // setEqual(false);
+
     socket.emit('check_answer', { user_cookies: userCookie, guess: inputVal });
     // return randomizeTrack();
   }
@@ -108,47 +110,54 @@ function Game() {
       <Navbar />
       <div className="contentBox">
         <h1>Play</h1>
-        <div className='leaderboard'>
-          <Leaderboard users={users} />
-        </div>
-        <div className="gameContent">
-          <div className="lyrics" style={{ width: '75%' }}>
-            <button onClick={getSongLyrics}>Generate Lyrics</button>
-            <div>
-              {lyrics.length > 0 ? (
-                <div
-                  style={{
-                    overflowY: 'scroll',
-                    height: '400px',
-                    fontSize: '28px',
-                    color: 'black',
-                    width: '800px',
-                  }}
-                >
-                  {lyrics.split('\n').map((line, index) => (
-                    <React.Fragment key={index}>
-                      <span>{line}</span>
-                      <br />
-                    </React.Fragment>
-                  ))}
-                </div>
-              ) : (
-                <p>Lyrics go here</p>
-              )}
-            </div>
+        <div className='gameWrapper'>
+          <div className='leaderboard'>
+            <Leaderboard users={users} />
           </div>
-          <form onSubmit={compareAnswer}>
-            <input
-              type="text"
-              name="guess"
-              value={inputVal}
-              onChange={(e) => {
-                setInputVal(e.target.value);
-              }}
-            />
-            <button type="submit">Guess</button>
-          </form>{' '}
-          <br />
+          <div className='gameContent'>
+            <div className='lyrics' style={{ width: '75%' }}>
+              <button onClick={getSongLyrics}>Generate Lyrics</button>
+              <div>
+                {lyrics.length > 0 ? (
+                  <div
+                    style={{
+                      overflowY: 'scroll',
+                      height: '400px',
+                      fontSize: '28px',
+                      color: 'black',
+                      width: '800px',
+                    }}
+                  >
+                    {lyrics.split('\n').map((line, index) => (
+                      <React.Fragment key={index}>
+                        <span>{line}</span>
+                        <br />
+                      </React.Fragment>
+                    ))}
+                  </div>
+                ) : (
+                  <p>Lyrics go here</p>
+                )}
+              </div>
+            </div>
+            <form onSubmit={compareAnswer}>
+              <input
+                type='text'
+                name='guess'
+                value={inputVal}
+                onChange={(e) => {
+                  setInputVal(e.target.value);
+                }}
+              />
+              <button type='submit'>Guess</button>
+            </form>{' '}
+            <br />
+          </div>
+          <div className='inputboard'>
+            {guesses.map((guess) => (
+              <div>{guess}</div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
