@@ -108,14 +108,8 @@ function Game() {
       <Navbar />
       <div className='contentBox'>
         <h1>Play</h1>
-        <div></div>
-        <div>
+        <div className='leaderboard'>
           <Leaderboard users={users} />
-          {/* <ul>
-            {Object.keys(users).map((user) => (
-              <li>{user}{users[user]}</li>
-            ))}
-          </ul> */}
         </div>
         <div className='gameContent'>
           <div className='lyrics' style={{ width: '75%' }}>
