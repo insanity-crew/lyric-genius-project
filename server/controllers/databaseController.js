@@ -4,22 +4,63 @@ const Song = require('../models/lyricModel');
 const databaseController = {};
 databaseController.createEntry = async (req, res, next) => {
   // get lyrics from res.locals object from chatgpt
-  const { response, artist, songname, trackId } = res.locals;
-  console.log('response from databse:', res.locals.response);
+  const { lyrics, artist, title, trackId } = res.locals;
+
+  if (lyrics.length < 1)
+    return next({
+      log:
+        'Invalid lyrics param in databaseController.createEntry middleware function',
+      status: 400,
+      message: {
+        err:
+          ' Invalid lyrics param in databaseController.createEntry middleware function',
+      },
+    });
+  if (artist.length < 1)
+    return next({
+      log:
+        'Invalid artist param in databaseController.createEntry middleware function',
+      status: 400,
+      message: {
+        err:
+          ' Invalid artist param in databaseController.createEntry middleware function',
+      },
+    });
+  if (!trackId.length)
+    return next({
+      log:
+        'Invalid trackid param in databaseController.createEntry middleware function',
+      status: 400,
+      message: {
+        err:
+          'Invalid trackid param in databaseController.createEntry middleware function',
+      },
+    });
+  if (title.length < 1)
+    return next({
+      log:
+        'Invalid songname param in databaseController.createEntry middleware function',
+      status: 400,
+      message: {
+        err:
+          'Invalid songname param in databaseController.createEntry middleware function',
+      },
+    });
 
   // save lyrics onto database
   try {
     const newSong = await Song.create({
-      name: songname,
-      artist: artist,
-      lyrics: response,
+      lyrics,
+      artist,
+      title,
       trackId,
     });
     res.locals.newSong = newSong;
     return next();
   } catch (err) {
     return next({
-      log: 'Express error handler caught at databaseController.createEntry middleware error',
+      log:
+        'Express error handler caught at databaseController.createEntry middleware error',
       status: 400,
       message: { err: 'Cannot create song entry in db' },
     });
@@ -27,20 +68,27 @@ databaseController.createEntry = async (req, res, next) => {
 };
 
 databaseController.getSong = async (req, res, next) => {
-  // console.log('trackId', typeof trackId);
-
+  const trackId = req.params.id;
+  if (!typeof trackId === 'number')
+    return next({
+      log:
+        'Invalid trackid param in databaseController.createEntry middleware function',
+      status: 400,
+      message: {
+        err:
+          'Invalid trackid param in databaseController.createEntry middleware function',
+      },
+    });
   try {
-    const trackId = req.params.id;
-    // console.log('name', name);
-    const song = await Song.findOne({ trackId: trackId });
+    const song = await Song.findOne({ trackId });
     res.locals.foundSong = song;
     return next();
   } catch (err) {
-    console.error('Error in databaseController.getSong:', err);
     return next({
-      log: 'Express error handler caught at databaseController.getSong middleware error',
+      log:
+        'Express error handler caught error at databaseController.getSong middleware error',
       status: 400,
-      message: { err: 'Cannot get song from db' },
+      message: { err: err },
     });
   }
 };

@@ -3,10 +3,25 @@ const express = require('express');
 const apiRoutes = require('./routes/apiRoutes');
 const userRoutes = require('./routes/userRoutes');
 const app = express();
+const mongoose = require('mongoose');
 // const cors = require('cors');
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, './../build')));
+
+const MONGO_URI =
+  'mongodb+srv://iterationDB:iterationDB@cluster0.8frqam3.mongodb.net/?retryWrites=true&w=majority';
+
+mongoose
+  .connect(MONGO_URI, {
+    // options for the connect method to parse the URI
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    // sets the name of the DB that our collections are part of
+    dbName: 'lyric-genius-project',
+  })
+  // .then(() => console.log('Connected to Mongo DB.'))
+  .catch((err) => console.log(err));
 
 // app.use(
 //   cors({
@@ -34,7 +49,6 @@ app.use((err, req, res, next) => {
 
     message: err.message,
   };
-  console.log(errorObj.log);
 
   res.status(errorObj.status).json(errorObj.message);
   //   res.locals.message = err.message;

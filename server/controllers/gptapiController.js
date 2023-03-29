@@ -1,10 +1,52 @@
 const { Configuration, OpenAIApi } = require('openai');
-const OPENAI_API_KEY = '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';
+const OPENAI_API_KEY = process.env.SLAVA_OPENAI_KEY;
 
 const gptapiController = {};
 gptapiController.genLyrics = async (req, res, next) => {
   try {
     const { lyrics, artist, songname, trackId } = res.locals;
+
+    if (lyrics.length < 1)
+      return next({
+        log:
+          'Invalid lyrics param in gptapiController.genLyrics middleware function',
+        status: 400,
+        message: {
+          err:
+            ' Invalid lyrics param in gptapiController.genLyrics middleware function',
+        },
+      });
+    if (artist.length < 1)
+      return next({
+        log:
+          'Invalid artist param in gptapiController.genLyrics middleware function',
+        status: 400,
+        message: {
+          err:
+            ' Invalid artist param in gptapiController.genLyrics middleware function',
+        },
+      });
+    if (typeof trackId === 'number')
+      return next({
+        log:
+          'Invalid trackid param in gptapiController.genLyrics middleware function',
+        status: 400,
+        message: {
+          err:
+            'Invalid trackid param in gptapiController.genLyrics middleware function',
+        },
+      });
+    if (songname.length < 1)
+      return next({
+        log:
+          'Invalid songnmae param in gptapiController.genLyrics middleware function',
+        status: 400,
+        message: {
+          err:
+            'Invalid songname param in gptapiController.genLyrics middleware function',
+        },
+      });
+
     const configuration = new Configuration({
       apiKey: OPENAI_API_KEY,
     });
@@ -21,18 +63,24 @@ gptapiController.genLyrics = async (req, res, next) => {
         },
       ],
     });
-    console.log(completion.data);
     const response = completion.data.choices[0].message.content;
 
-    res.locals.response = response;
+    res.locals.lyrics = response;
     res.locals.artist = artist;
-    res.locals.songname = songname;
+    res.locals.title = songname;
     res.locals.trackId = trackId;
     return next();
   } catch (error) {
     // Handle error
-    console.error('Error generating lyrics', error);
-    return res.status(500).json({ error: 'Failed to generate Lyrics' });
+    return next({
+      log:
+        'Error occured in gptapiController.genLyrics - could not generate lyrics',
+      status: 400,
+      message: {
+        err:
+          'Error occured in gptapiController.genLyrics - could not generate lyrics',
+      },
+    });
   }
 };
 module.exports = gptapiController;

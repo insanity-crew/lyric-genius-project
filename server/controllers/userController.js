@@ -22,7 +22,7 @@ userController.createUser = async (req, res, next) => {
         err: ' Invalid name param in userController.createUser middleware function',
       },
     });
-  if (!validateEmail(email))
+  if (!validateEmail(email)) 
     return next({
       log: 'Invalid email param in userController.createUser middleware function',
       status: 400,
@@ -42,6 +42,7 @@ userController.createUser = async (req, res, next) => {
   // MongoDB Create User & Error Handling
   try {
     await User.create({ name, email, password });
+    res.locals.success = true;
     return next();
   } catch (err) {
     return next({

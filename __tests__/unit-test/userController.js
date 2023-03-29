@@ -1,7 +1,24 @@
 const userController = require('../../server/controllers/userController.js');
+const User = require('../../server/models/userModel.js');
+
+const mongoose = require('mongoose');
+
+const MONGO_URI =
+  'mongodb+srv://iterationDB:iterationDB@cluster0.8frqam3.mongodb.net/?retryWrites=true&w=majority';
+
+mongoose
+  .connect(MONGO_URI, {
+    // options for the connect method to parse the URI
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    // sets the name of the DB that our collections are part of
+    dbName: 'lyric-genius-project',
+  })
+  // .then(() => console.log('Connected to Mongo DB.'))
+  .catch((err) => console.log(err));
 
 describe('userController Test', () => {
-  describe('create user', () => {
+  describe('.createUser Method Test', () => {
     let mockRequest;
     let mockResponse;
     let nextFunction;
@@ -9,9 +26,9 @@ describe('userController Test', () => {
     beforeEach(() => {
       mockRequest = {
         body: {
-          name: 'jonathan',
-          email: 'someEmail@me.com',
-          password: 'password',
+          name: 'test',
+          email: 'test@test.com',
+          password: 'test',
         },
       };
       mockResponse = {
@@ -22,10 +39,12 @@ describe('userController Test', () => {
       nextFunction = jest.fn();
     });
 
+
     // nextFunction only invoked on error (prolly)
-    it('acceptable name, email, password on req body continues to next middleware function', () => {
-      userController.createUser(mockRequest, mockResponse, nextFunction);
-      expect(nextFunction).not.toHaveBeenCalled();
+    it('acceptable name, email, password on req body continues to next middleware function', async () => {
+      await userController.createUser(mockRequest, mockResponse, nextFunction);
+      expect(mockResponse.locals.success);
+      await User.deleteOne({name: 'test'});
     });
 
     it('unacceptable name on req body returns error object', () => {
@@ -43,9 +62,9 @@ describe('userController Test', () => {
     it('unacceptable email on req body returns error object', () => {
       mockRequest = {
         body: {
-          name: 'jonathan',
-          email: 'wrongEmail',
-          password: 'password',
+          name: 'test',
+          email: 'test inncorrect email',
+          password: 'test',
         },
       };
 
@@ -56,7 +75,7 @@ describe('userController Test', () => {
     it('unacceptable password on req body returns error object', () => {
       mockRequest = {
         body: {
-          name: 'jonathan',
+          name: 'test',
           email: 'test@test.com',
           password: '',
         },
@@ -95,7 +114,7 @@ describe('userController Test', () => {
     it('unacceptable email on req body returns error object', () => {
       mockRequest = {
         body: {
-          name: 'jonathan',
+          name: 'test',
           email: 'wrongEmail',
           password: 'password',
         },
@@ -107,7 +126,7 @@ describe('userController Test', () => {
     it('unacceptable password on req body returns error object', () => {
       mockRequest = {
         body: {
-          name: 'jonathan',
+          name: 'test',
           email: 'test@test.com',
           password: '',
         },
