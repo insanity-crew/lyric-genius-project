@@ -108,47 +108,50 @@ function Game() {
       <Navbar />
       <div className='contentBox'>
         <h1>Play</h1>
-        <div className='leaderboard'>
-          <Leaderboard users={users} />
-        </div>
-        <div className='gameContent'>
-          <div className='lyrics' style={{ width: '75%' }}>
-            <button onClick={getSongLyrics}>Generate Lyrics</button>
-            <div>
-              {lyrics.length > 0 ? (
-                <div
-                  style={{
-                    overflowY: 'scroll',
-                    height: '400px',
-                    fontSize: '28px',
-                    color: 'black',
-                    width: '800px',
-                  }}
-                >
-                  {lyrics.split('\n').map((line, index) => (
-                    <React.Fragment key={index}>
-                      <span>{line}</span>
-                      <br />
-                    </React.Fragment>
-                  ))}
-                </div>
-              ) : (
-                <p>Lyrics go here</p>
-              )}
-            </div>
+        <div className='gameWrapper'>
+          <div className='leaderboard'>
+            <Leaderboard users={users} />
           </div>
-          <form onSubmit={compareAnswer}>
-            <input
-              type='text'
-              name='guess'
-              value={inputVal}
-              onChange={(e) => {
-                setInputVal(e.target.value);
-              }}
-            />
-            <button type='submit'>Guess</button>
-          </form>{' '}
-          <br />
+          <div className='gameContent'>
+            <div className='lyrics' style={{ width: '75%' }}>
+              <button onClick={getSongLyrics}>Generate Lyrics</button>
+              <div>
+                {lyrics.length > 0 ? (
+                  <div
+                    style={{
+                      overflowY: 'scroll',
+                      height: '400px',
+                      fontSize: '28px',
+                      color: 'black',
+                      width: '800px',
+                    }}
+                  >
+                    {lyrics.split('\n').map((line, index) => (
+                      <React.Fragment key={index}>
+                        <span>{line}</span>
+                        <br />
+                      </React.Fragment>
+                    ))}
+                  </div>
+                ) : (
+                  <p>Lyrics go here</p>
+                )}
+              </div>
+            </div>
+            <form onSubmit={compareAnswer}>
+              <input
+                type='text'
+                name='guess'
+                value={inputVal}
+                onChange={(e) => {
+                  setInputVal(e.target.value);
+                }}
+              />
+              <button type='submit'>Guess</button>
+            </form>{' '}
+            <br />
+          </div>
+          <div className='inputboard'></div>
         </div>
       </div>
     </div>

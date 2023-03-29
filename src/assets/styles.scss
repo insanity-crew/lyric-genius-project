@@ -1,4 +1,4 @@
-$color1: #8ecae6;
+$color1: #1e1e1e;
 $color2: rgb(71, 169, 215);
 $color3: #023047;
 $color4: #ffb703;
@@ -8,16 +8,22 @@ body {
   background-color: $color1;
   font-family: 'Comfortaa', cursive;
 }
+.gameWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
 .contentBox {
-//   display: flex;
-    
+  //   display: flex;
+
   text-align: center;
   color: white;
   text-shadow: 1px 1px 1px black;
   margin: auto;
-  width: 1000px;
+  width: 1300px;
   h1 {
     font-size: 60px;
+    // margin-left: 230px;
   }
   h3 {
     font-size: 30px;
@@ -30,8 +36,9 @@ input {
   margin: auto;
 }
 .gameContent {
+  flex: 1;
   color: white;
-  border: $color5 solid 8px;
+  border: #ef2d64 solid 8px;
   margin: auto;
   justify-content: center;
   text-align: center;
@@ -57,7 +64,8 @@ input {
 // }
 
 button {
-  background-color: darken($color2, 7%);
+  background-color: #1e1e1e;
+  color: white;
   text-decoration: none;
   border: 3px darken($color1, 50%);
   border-radius: 27px;
@@ -92,7 +100,7 @@ button:hover {
 
 .imagecontainer {
   display: flex;
-  justify-content: space-between;
+  // justify-content: space-between;
 }
 
 .loginPage {
@@ -132,5 +140,20 @@ input {
 .player-score {
   font-weight: normal;
 }
-// .leaderboard {
-// }
+.leaderboard {
+  flex: 20% 0 0;
+  // background-color: white;
+  border: 4px solid #ef2d64;
+  height: 630px;
+  border-radius: 10px;
+  margin-right: 2rem;
+}
+
+.inputboard {
+  flex: 20% 0 0;
+  // background-color: white;
+  border: 4px solid #ef2d64;
+  height: 630px;
+  border-radius: 10px;
+  margin-left: 2rem;
+}
