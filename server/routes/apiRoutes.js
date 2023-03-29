@@ -6,12 +6,16 @@ const databaseController = require('../controllers/databaseController');
 
 router.post(
   '/lyricsapi',
+  // res.locals res.locals.lyrics = lyricsBody;
+  // res.locals.artist = artist;
+  // res.locals.songname = songname;
+  // res.locals.trackId = trackId;
   lyricsapiController.getLyrics,
-  gptapiController.genLyrics,
-  databaseController.createEntry,
+  // gptapiController.genLyrics,
+  // databaseController.createEntry,
   (req, res) => {
     console.log('Lyrics:', res.locals.lyrics);
-    res.status(200).json({ lyrics: res.locals.newSong });
+    res.status(200).json({ lyrics: res.locals.lyrics });
   }
 );
 

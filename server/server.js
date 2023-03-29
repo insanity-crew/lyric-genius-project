@@ -7,7 +7,9 @@ const app = express();
 const cors = require('cors');
 const socketIO = require('socket.io');
 const http = require('http');
+const axios = require('axios');
 const databaseFunction = require('./controllers/databaseController');
+const lyricsFunction = require('./controllers/lyricsapiController');
 app.use(express.json());
 app.use(express.static(path.join(__dirname, './../build')));
 
@@ -40,11 +42,11 @@ io_server.on('connection', (socket_connection) => {
   //   console.log('a user has connected', res.id);
   // });
   socket_connection.on('disconnect', async (res) => {
-    console.log('user disconnected');
-    const username = await databaseFunction.getUserName(res.user_cookies);
-    const unIndex = users.indexOf(username);
-    if (unIndex != null && unIndex !== undefined) users.splice(unIndex, 1);
-    console.log('Users logged in:', users);
+    // console.log('user disconnected');
+    // const username = await databaseFunction.getUserName(res.user_cookies);
+    // const unIndex = users.indexOf(username);
+    // if (unIndex != null && unIndex !== undefined) users.splice(unIndex, 1);
+    // console.log('Users logged in:', users);
   });
 
   socket_connection.on('i_have_joined', async (res) => {
@@ -56,6 +58,15 @@ io_server.on('connection', (socket_connection) => {
     console.log('Users logged in:', users);
     // io_server.emit('usersArray')
     // `${username} has won this round`);
+  });
+
+  socket_connection.on('ready_to_play', async () => {
+    // call function to get tracks
+    const response = await lyricsFunction.getLyrics();
+    // console.log(response, 'ready_to_play receiving request');
+    // emit lyrics array
+    console.log('about to emit to frontend');
+    io_server.emit('get_lyrics_from_server', response);
   });
 });
 

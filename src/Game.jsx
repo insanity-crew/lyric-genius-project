@@ -48,6 +48,12 @@ function Game() {
     // return () => {
     //   socket.disconnect();
     // };
+
+    socket.on('get_lyrics_from_server', (lyrics_object) => {
+      // lyrics are this object
+      console.log('im here');
+      console.log(lyrics_object, 'in frontend');
+    });
   }, []);
 
   async function addSong() {
@@ -57,7 +63,18 @@ function Game() {
       trackId: idInput,
     });
   }
+
+  async function getSongLyrics() {
+    console.log('about to get lyrics');
+    socket.emit('ready_to_play');
+    // socket.on('get_lyrics_from_server', (obj) => {
+    //   console.log('in function getsonglyrics');
+    // });
+  }
   async function randomizeTrack() {
+    //const rnadomTrack = pick random number in songs database
+
+    // socket.emit('ready_to_play', randomTrack)
     console.log('in randomize track');
     const newTrackId = Math.floor(Math.random() * 15);
     console.log(newTrackId);
@@ -108,7 +125,7 @@ function Game() {
         </div>
         <div className="gameContent">
           <div className="lyrics" style={{ width: '75%' }}>
-            <button onClick={randomizeTrack}>Generate Lyrics</button>
+            <button onClick={getSongLyrics}>Generate Lyrics</button>
             <div>
               {lyrics.length > 0 ? (
                 <div
