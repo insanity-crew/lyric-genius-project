@@ -52,11 +52,12 @@ function Game() {
     //   socket.disconnect();
     // };
 
-    socket.on('get_lyrics_from_server', (lyrics_object) => {
+    socket.on('get_lyrics_from_server', (lyrics) => {
       // lyrics are this object
       console.log('im here');
       // ANDRI and JAY: chenge this to state will update frontend for everyone (lyrics_objects is a string)
-      console.log(lyrics_object, 'in frontend');
+      console.log(lyrics, 'in frontend');
+      setLyrics(lyrics);
     });
   }, []);
 
@@ -97,27 +98,15 @@ function Game() {
   //create key for input song name
   function compareAnswer(event) {
     event.preventDefault();
-    setEqual(false);
-    if (dataName === inputVal) {
-      console.log(
-        '' +
-          dataName +
-          '=== ' +
-          inputVal +
-          '   > ' +
-          (dataName === inputVal ? true : false)
-      );
-      // const winnerCookie = Cookies.get('ssid');
-      socket.emit('user_has_won', { user_cookies: userCookie });
-      // alert('Correct!');
-      return randomizeTrack();
-    } else alert('Incorrect!'); //render something
+    // setEqual(false);
+    socket.emit('check_answer', { user_cookies: userCookie, guess: inputVal });
+    return randomizeTrack();
   }
 
   return (
     <div>
       <Navbar />
-      <div className="contentBox">
+      <div className='contentBox'>
         <h1>Play</h1>
         <div></div>
         <div>
@@ -128,8 +117,8 @@ function Game() {
             ))}
           </ul> */}
         </div>
-        <div className="gameContent">
-          <div className="lyrics" style={{ width: '75%' }}>
+        <div className='gameContent'>
+          <div className='lyrics' style={{ width: '75%' }}>
             <button onClick={getSongLyrics}>Generate Lyrics</button>
             <div>
               {lyrics.length > 0 ? (
@@ -156,14 +145,14 @@ function Game() {
           </div>
           <form onSubmit={compareAnswer}>
             <input
-              type="text"
-              name="guess"
+              type='text'
+              name='guess'
               value={inputVal}
               onChange={(e) => {
                 setInputVal(e.target.value);
               }}
             />
-            <button type="submit">Guess</button>
+            <button type='submit'>Guess</button>
           </form>{' '}
           <br />
         </div>
