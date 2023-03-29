@@ -33,8 +33,8 @@ function Game() {
       // }).json();
       // // const username = await getUserName(winnerCookie);
       // setUsers([...users, username]);
-      if(userCookie)
-      socket.emit('i_have_joined', { user_cookies: userCookie });
+      if (userCookie)
+        socket.emit('i_have_joined', { user_cookies: userCookie });
       socket.on('emmiting_to_users', (name) => {
         console.log('user connected ', name);
         console.log(users);
@@ -43,6 +43,21 @@ function Game() {
       });
     });
 
+    // if (dataName === inputVal) {
+    //   setWinner(true);
+    // } else {
+    //   setWinner(false);
+    // }
+    // return () => {
+    //   socket.disconnect();
+    // };
+
+    socket.on('get_lyrics_from_server', (lyrics_object) => {
+      // lyrics are this object
+      console.log('im here');
+      // ANDRI and JAY: chenge this to state will update frontend for everyone (lyrics_objects is a string)
+      console.log(lyrics_object, 'in frontend');
+    });
   }, []);
 
   async function addSong() {
@@ -52,7 +67,18 @@ function Game() {
       trackId: idInput,
     });
   }
+
+  async function getSongLyrics() {
+    console.log('about to get lyrics');
+    socket.emit('ready_to_play');
+    // socket.on('get_lyrics_from_server', (obj) => {
+    //   console.log('in function getsonglyrics');
+    // });
+  }
   async function randomizeTrack() {
+    //const rnadomTrack = pick random number in songs database
+
+    // socket.emit('ready_to_play', randomTrack)
     console.log('in randomize track');
     const newTrackId = Math.floor(Math.random() * 15);
     console.log(newTrackId);
@@ -91,20 +117,20 @@ function Game() {
   return (
     <div>
       <Navbar />
-      <div className='contentBox'>
+      <div className="contentBox">
         <h1>Play</h1>
         <div></div>
         <div>
-          <Leaderboard users = {users}/>
+          <Leaderboard users={users} />
           {/* <ul>
             {Object.keys(users).map((user) => (
               <li>{user}{users[user]}</li>
             ))}
           </ul> */}
         </div>
-        <div className='gameContent'>
-          <div className='lyrics' style={{ width: '75%' }}>
-            <button onClick={randomizeTrack}>Generate Lyrics</button>
+        <div className="gameContent">
+          <div className="lyrics" style={{ width: '75%' }}>
+            <button onClick={getSongLyrics}>Generate Lyrics</button>
             <div>
               {lyrics.length > 0 ? (
                 <div
@@ -130,14 +156,14 @@ function Game() {
           </div>
           <form onSubmit={compareAnswer}>
             <input
-              type='text'
-              name='guess'
+              type="text"
+              name="guess"
               value={inputVal}
               onChange={(e) => {
                 setInputVal(e.target.value);
               }}
             />
-            <button type='submit'>Guess</button>
+            <button type="submit">Guess</button>
           </form>{' '}
           <br />
         </div>
