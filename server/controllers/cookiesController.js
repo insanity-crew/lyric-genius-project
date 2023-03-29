@@ -10,14 +10,14 @@ cookieController.setSSIDCookie = async (req, res, next) => {
   // ssid cookie
   res.cookie('ssid', `${id}`);
   res.locals.id = id;
-  console.log(' SetSSIDCOOKIE', res.locals.id,{ httpOnly: true });
+  console.log(' SetSSIDCOOKIE', res.locals.id, { httpOnly: true });
 
   //loggedIn cookie
   res.cookie('loggedIn', 'true', {
     maxAge: 24 * 60 * 60 * 1000, // 1 day in milliseconds
     sameSite: 'strict',
     path: '/play',
-    domain: "localhost"
+    domain: 'localhost',
   });
   return next();
 };

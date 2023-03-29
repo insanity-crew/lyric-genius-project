@@ -17,14 +17,27 @@ function Game() {
   const [lyrics, setLyrics] = useState('');
   const [equal, setEqual] = useState(false);
   const [winner, setWinner] = useState('');
+  const [users, setUsers] = useState([]);
 
+  const userCookie = Cookies.get('ssid');
   useEffect(() => {
     socket.on('connect', () => {
       console.log('Connected to server', socket.id, 'in the frontend');
-    });
-
-    socket.on('emmiting_to_users', (res) => {
-      console.log('message received from ', res);
+      // const username = await fetch('/users/getUser', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({ cookie: userCookie }),
+      // }).json();
+      // // const username = await getUserName(winnerCookie);
+      // setUsers([...users, username]);
+      socket.emit('i_have_joined', { user_cookies: userCookie });
+      socket.on('emmiting_to_users', (name) => {
+        console.log('user connected ', name);
+        console.log(users);
+        setUsers([...name]);
+      });
     });
 
     // if (dataName === inputVal) {
@@ -32,9 +45,9 @@ function Game() {
     // } else {
     //   setWinner(false);
     // }
-    return () => {
-      socket.disconnect();
-    };
+    // return () => {
+    //   socket.disconnect();
+    // };
   }, []);
 
   async function addSong() {
@@ -73,8 +86,8 @@ function Game() {
           '   > ' +
           (dataName === inputVal ? true : false)
       );
-      const winnerCookie = Cookies.get('ssid');
-      socket.emit('user_has_won', { user_cookies: winnerCookie });
+      // const winnerCookie = Cookies.get('ssid');
+      socket.emit('user_has_won', { user_cookies: userCookie });
       // alert('Correct!');
       return randomizeTrack();
     } else alert('Incorrect!'); //render something
@@ -86,6 +99,13 @@ function Game() {
       <div className="contentBox">
         <h1>Play</h1>
         <div></div>
+        <div>
+          <ul>
+            {users.map((user) => (
+              <li>{user}</li>
+            ))}
+          </ul>
+        </div>
         <div className="gameContent">
           <div className="lyrics" style={{ width: '75%' }}>
             <button onClick={randomizeTrack}>Generate Lyrics</button>

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
 const cookiesController = require('../controllers/cookiesController');
+const databaseController = require('../controllers/databaseController');
 
 router.post(
   '/createusers',
@@ -18,9 +19,14 @@ router.post(
   cookiesController.setSSIDCookie,
   (req, res) => {
     res.status(200).json({
-      id: res.locals.id, verified: res.locals.verified
+      id: res.locals.id,
+      verified: res.locals.verified,
     });
   }
 );
+
+// router.post('/getUser', databaseController.getUser, (req, res) => {
+//   res.status(201).json(res.locals.id);
+// });
 
 module.exports = router;
