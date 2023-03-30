@@ -14,6 +14,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, './../build')));
 
 const users = {};
+const guesses = [];
 let songname;
 const socketToCookie = {};
 let winnerFound = false;
@@ -94,12 +95,17 @@ io_server.on('connection', (socket_connection) => {
     console.log(res.guess);
     console.log(winnerFound);
     console.log(songname, ' this is the song name');
+    const username = await databaseFunction.getUserName(res.user_cookies);
     if (winnerFound !== true && res.guess === songname) {
-      const username = await databaseFunction.getUserName(res.user_cookies);
       console.log(username);
       users[username]++;
       io_server.emit('emmiting_to_users', users);
       winnerFound = true;
+    } else {
+      guesses.push({username,guess:res.guess})
+      // guesses[username] = res.guess;
+
+      io_server.emit('display_guess', guesses);
     }
   });
 });

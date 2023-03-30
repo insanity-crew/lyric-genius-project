@@ -25,15 +25,7 @@ function Game() {
   useEffect(() => {
     socket.on('connect', () => {
       console.log('Connected to server', socket.id, 'in the frontend');
-      // const username = await fetch('/users/getUser', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({ cookie: userCookie }),
-      // }).json();
-      // // const username = await getUserName(winnerCookie);
-      // setUsers([...users, username]);
+
       if (userCookie)
         socket.emit('i_have_joined', { user_cookies: userCookie });
       socket.on('emmiting_to_users', (name) => {
@@ -44,14 +36,14 @@ function Game() {
       });
     });
 
-    // if (dataName === inputVal) {
-    //   setWinner(true);
-    // } else {
-    //   setWinner(false);
-    // }
-    // return () => {
-    //   socket.disconnect();
-    // };
+    socket.on('display_guess', (newGuess) => {
+      console.log('this is guesses before', guesses);
+      setGuesses(newGuess);
+      console.log('this is NEW guesses, ', newGuess);
+      console.log('this is guesses AFTER', guesses);
+
+      console.log('this is guesses username, ', guesses[0].username);
+    });
 
     socket.on('get_lyrics_from_server', (lyrics) => {
       // lyrics are this object
@@ -102,13 +94,15 @@ function Game() {
     // setEqual(false);
 
     socket.emit('check_answer', { user_cookies: userCookie, guess: inputVal });
+
+    console.log('Guesses:', guesses);
     // return randomizeTrack();
   }
 
   return (
     <div>
       <Navbar />
-      <div className="contentBox">
+      <div className='contentBox'>
         <h1>Play</h1>
         <div className='gameWrapper'>
           <div className='leaderboard'>
@@ -124,7 +118,7 @@ function Game() {
                       overflowY: 'scroll',
                       height: '400px',
                       fontSize: '28px',
-                      color: 'black',
+                      color: 'white',
                       width: '800px',
                     }}
                   >
@@ -154,8 +148,11 @@ function Game() {
             <br />
           </div>
           <div className='inputboard'>
-            {guesses.map((guess) => (
-              <div>{guess}</div>
+            {guesses.map((name) => (
+              <div>
+                <span>{name.username}: </span>
+                <span>{name.guess}: </span>
+              </div>
             ))}
           </div>
         </div>
