@@ -20,6 +20,8 @@ function Game() {
   const [winner, setWinner] = useState('');
   const [users, setUsers] = useState({});
   const [guesses, setGuesses] = useState([]);
+  const [wrongGuess, setWrongGuess] = useState(false);
+  const [showWinner, setShowWinner] = useState(false);
 
   const userCookie = Cookies.get('ssid');
   useEffect(() => {
@@ -39,10 +41,10 @@ function Game() {
     socket.on('display_guess', (newGuess) => {
       console.log('this is guesses before', guesses);
       setGuesses(newGuess);
-      console.log('this is NEW guesses, ', newGuess);
-      console.log('this is guesses AFTER', guesses);
+      // console.log('this is NEW guesses, ', newGuess);
+      // console.log('this is guesses AFTER', guesses);
 
-      console.log('this is guesses username, ', guesses[0].username);
+      // console.log('this is guesses username, ', guesses[0].username);
     });
 
     socket.on('get_lyrics_from_server', (lyrics) => {
@@ -51,6 +53,21 @@ function Game() {
       // ANDRI and JAY: chenge this to state will update frontend for everyone (lyrics_objects is a string)
       console.log(lyrics, 'in frontend');
       setLyrics(lyrics);
+      setShowWinner(false);
+    });
+
+    socket.on('you_guessed_wrong', () => {
+      setWrongGuess(true);
+      setTimeout(() => {
+        setWrongGuess(false);
+      }, 3000);
+    });
+
+    socket.on('display_winner', (winnerName) => {
+      console.log('here come winner', winnerName);
+      setShowWinner(true);
+      setWinner(winnerName);
+      console.log(winner);
     });
   }, []);
 
@@ -96,21 +113,28 @@ function Game() {
     socket.emit('check_answer', { user_cookies: userCookie, guess: inputVal });
 
     console.log('Guesses:', guesses);
+    setInputVal('');
     // return randomizeTrack();
   }
 
   return (
     <div>
       <Navbar />
-      <div className='contentBox'>
-        <h1>Play</h1>
-        <div className='gameWrapper'>
-          <div className='leaderboard'>
+      <div className="contentBox">
+        {/* {wrongGuess && <h3>Wrong guess! Try again.</h3>} */}
+        <div className="guessesBox">
+          {wrongGuess && <h1>Wrong guess! Try again.</h1>}
+          {showWinner && <h1>{winner} is the winner!</h1>}
+        </div>
+        <div className="gameWrapper">
+          <div className="leaderboard">
             <Leaderboard users={users} />
           </div>
-          <div className='gameContent'>
-            <div className='lyrics' style={{ width: '75%' }}>
-              <button onClick={getSongLyrics}>Generate Lyrics</button>
+          <div className="gameContent">
+            <div className="lyrics" style={{ width: '75%' }}>
+              <button className="inside" onClick={getSongLyrics}>
+                Generate Lyrics
+              </button>
               <div>
                 {lyrics.length > 0 ? (
                   <div
@@ -119,7 +143,7 @@ function Game() {
                       height: '400px',
                       fontSize: '28px',
                       color: 'white',
-                      width: '800px',
+                      width: '500px',
                     }}
                   >
                     {lyrics.split('\n').map((line, index) => (
@@ -136,22 +160,25 @@ function Game() {
             </div>
             <form onSubmit={compareAnswer}>
               <input
-                type='text'
-                name='guess'
+                id="guessInp"
+                type="text"
+                name="guess"
                 value={inputVal}
                 onChange={(e) => {
                   setInputVal(e.target.value);
                 }}
               />
-              <button type='submit'>Guess</button>
+              <button className="inside" type="submit">
+                Guess
+              </button>
             </form>{' '}
             <br />
           </div>
-          <div className='inputboard'>
+          <div className="inputboard">
             {guesses.map((name) => (
-              <div>
-                <span>{name.username}: </span>
-                <span>{name.guess}: </span>
+              <div className="guesses">
+                <span id="guess-name">{name.username}: </span>
+                <span id="guess-text">{name.guess} </span>
               </div>
             ))}
           </div>

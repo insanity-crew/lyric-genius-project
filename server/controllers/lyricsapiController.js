@@ -20,7 +20,7 @@ lyricsapiController.getTopSongs = async () => {
     };
     console.log('in lyricscontroller.getTopSongs');
     const resultUrl =
-      'https://api.musixmatch.com/ws/1.1/chart.tracks.get?apikey=4a28964225d2c59da62da66afe9d9552&chart_name=top&page=1&page_size=10&f_has_lyrics=1&country=US';
+      'https://api.musixmatch.com/ws/1.1/chart.tracks.get?apikey=4a28964225d2c59da62da66afe9d9552&chart_name=top&page=1&page_size=12&f_has_lyrics=1&country=US';
     let response = await axios.get(resultUrl);
     if (response.status === 200) {
       const ran_num = Math.floor(Math.random() * (10 - 1 + 1)) + 1;

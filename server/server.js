@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, './../build')));
 
 const users = {};
-const guesses = [];
+let guesses = [];
 let songname;
 const socketToCookie = {};
 let winnerFound = false;
@@ -81,6 +81,9 @@ io_server.on('connection', (socket_connection) => {
     // songName = response.song;
     console.log(response);
     winnerFound = false;
+    guesses = [];
+    io_server.emit('display_guess', guesses);
+
     songname = response.song_name.toLowerCase();
     console.log(songname, 'songname in server.js');
     // console.log(response, 'ready_to_play receiving request');
@@ -99,12 +102,28 @@ io_server.on('connection', (socket_connection) => {
     if (winnerFound !== true && res.guess === songname) {
       console.log(username);
       users[username]++;
-      io_server.emit('emmiting_to_users', users);
+      // sort
+      // const sortedUsers = {};
+      // const sortedArray = [];
+      // Object.keys(users)
+      // for (let property in users) {
+      //   sortedArray.push(property,users[property]);
+      // }
+      // sortedArray.sort((a,b)=> {
+      //   return (b[1] - a[1])
+      // })
+
+      const sortedUsers = Object.fromEntries(
+        Object.entries(users).sort(([, a], [, b]) => b - a)
+      );
+
+      io_server.emit('emmiting_to_users', sortedUsers);
+      io_server.emit('display_winner', username);
       winnerFound = true;
     } else {
-      guesses.push({username,guess:res.guess})
+      guesses.push({ username, guess: res.guess });
       // guesses[username] = res.guess;
-
+      io_server.to(socket_connection.id).emit('you_guessed_wrong');
       io_server.emit('display_guess', guesses);
     }
   });

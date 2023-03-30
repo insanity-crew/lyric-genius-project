@@ -12,6 +12,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  // margin-top: 100px;
 }
 .contentBox {
   //   display: flex;
@@ -100,7 +101,7 @@ button:hover {
 
 .imagecontainer {
   display: flex;
-  // justify-content: space-between;
+  justify-content: space-between;
 }
 
 .loginPage {
@@ -155,5 +156,37 @@ input {
   border: 4px solid #ef2d64;
   height: 630px;
   border-radius: 10px;
+  overflow: auto;
   margin-left: 2rem;
+}
+
+.logo {
+  // margin-right: 80px;
+}
+input[type='text'] {
+  font-size: 40px;
+  padding-left: 15px;
+}
+
+.guessesBox {
+  height: 100px;
+}
+.guesses {
+  display: flex;
+  align-content: flex-start;
+  margin-left: 10px;
+  margin-top: 7px;
+
+  // padding: 0.5rem;
+}
+#guess-text {
+  margin-left: 10px;
+}
+
+#guess-name {
+  font-weight: bold;
+}
+
+.inside {
+  background-color: black;
 }
